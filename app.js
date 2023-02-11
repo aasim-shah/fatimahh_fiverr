@@ -13,9 +13,11 @@ const port = process.env.PORT || 5000;
 app.use('/' , express.static(__dirname + '/public'))
 
 
-// mongoose.connect(process.env.DB_URL_LIVE).then(res=>console.log('compass db connected')).catch(err => console.log(err))
+
  mongoose.connect("mongodb+srv://asim:mardan@cluster0.btwlh.mongodb.net/fatimahh?retryWrites=true&w=majority").then(res=>console.log('atlass db connecteed')).catch(err => console.log(err))
 
+
+ 
  app.use(session({
   secret: 'keyboard cat',
   resave: false,
@@ -43,7 +45,7 @@ const checkUser = async(req ,res , next) =>{
 
 
 
-
+//route  for homeage
 app.get("/" , checkUser,async(req ,res) =>{
   console.log(req.cookies)
   res.render('Homepage' , {user: null})
@@ -51,31 +53,34 @@ app.get("/" , checkUser,async(req ,res) =>{
 
 
 
+//route for login page
 app.get("/login"  ,  async(req ,res) =>{
  res.render('LoginPage' , {err : null})
 })
 
 
+//route for community page
 
 app.get("/community"  ,  async(req ,res) =>{
   res.send('community page')
   // res.render('LoginPage' , {err : null})
  })
 
- 
+
+ //route for contact us page
 app.get("/contact"  ,  async(req ,res) =>{
   res.render('ContactUsPage')
  })
 
 
-
+//route for signup page
 app.get("/register"  ,  async(req ,res) =>{
   res.render('SignupPage' , {err : null})
  })
  
 
 
-
+// here nodejs server will recive name email and password from user and we are storing this data into mongodb
 app.post("/register" , async(req ,res) =>{
   const {name , email , password} = req.body
   console.log(req.body)
@@ -91,6 +96,7 @@ app.post("/register" , async(req ,res) =>{
     return res.render("SignupPage" , {err : "All Fields are required !"})
   }
   try {
+  //if user already registered it will show an error message (user already registred)  
     const findUser = await userModel.findOne({email : email})
     if(findUser){
       console.log('user already')
@@ -107,10 +113,16 @@ app.post("/register" , async(req ,res) =>{
 })
 
 
+
+//here we get email and passwrod from user and match that email and password with our database if user is valid or not 
 app.post('/login', async(req , res , done)=>{
 const {email , password} = req.body
 const user = await userModel.findOne({email})
+
+//is email is not found in mongodb it will show an error ('no user found ')
 if (!user) { return res.render("LoginPage" , {err : "No User Found"})}
+
+//is user puts wrong credintials it will show an error ('wrong creds ')
 if (! await bcrypt.compare(password ,user.password)) { return res.render("LoginPage" , {err : "Wrong Credintials"})}
 res.cookie('userId'  , user._id)
 res.render('Homepage' , {user: user})
