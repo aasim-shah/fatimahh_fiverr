@@ -294,7 +294,10 @@
     <main>
         <section class="box-container">
             <div class="box-wraper">
-                <h1 style="color:white; margin-left: 12rem; padding-top: 4rem;">HOmepage</h1>
+                <h1 style="color:white; margin-left: 12rem; padding-top: 4rem;">HOmepage   <% if(user) {%>
+                    <span style="margin-left: 1rem ;font-size:13px;"><%= user.name %></span>
+                    <%}%></h1>
+                
             </div>
         </section>
     </main>
