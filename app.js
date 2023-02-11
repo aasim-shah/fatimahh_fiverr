@@ -14,7 +14,7 @@ app.use('/' , express.static(__dirname + '/public'))
 
 
 
- mongoose.connect("mongodb+srv://asim:mardan@cluster0.btwlh.mongodb.net/fatimahh?retryWrites=true&w=majority").then(res=>console.log('atlass db connecteed')).catch(err => console.log(err))
+ mongoose.connect("mongodb+srv://faadous:webproject@fatimah.7aiflij.mongodb.net/?retryWrites=true&w=majority").then(res=>console.log('atlass db connecteed')).catch(err => console.log(err))
 
 
  
