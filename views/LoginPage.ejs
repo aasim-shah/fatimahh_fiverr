@@ -303,7 +303,7 @@
     <!--Box Starts-->
     <div class="login-box">
         <h2>Login</h2>
-        <form  target="/login" method="post"> 
+        <form  action="/login" method="post"> 
           <div class="user-box">
             <input type="text" name="email" required>
             <label>Name</label>
@@ -317,7 +317,7 @@
             <div class="" style="color:red; font-size: 1rem; text-align: center;"><%= err %></div>
             <%}%>
 
-          <button id="a1" >
+          <button type="submit" id="a1" >
             <span></span>
             <span></span>
             <span></span>
