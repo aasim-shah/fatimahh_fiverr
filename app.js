@@ -70,7 +70,7 @@ app.get("/contact"  ,  async(req ,res) =>{
 
 
 app.get("/register"  ,  async(req ,res) =>{
-  res.render('SignupPage')
+  res.render('SignupPage' , {err : null})
  })
  
 
@@ -87,20 +87,21 @@ app.post("/register" , async(req ,res) =>{
   })
 
   if(name === ""  || email === "" ){
-    req.flash('error' , "Fill All Fields Properly !")
-    return res.redirect('/register')
+    console.log('all fields are required')
+    return res.render("SignupPage" , {err : "All Fields are required !"})
   }
   try {
     const findUser = await userModel.findOne({email : email})
     if(findUser){
-      req.flash('error'  , 'user alraedy')
-     res.redirect('/register')
+      console.log('user already')
+      return res.render("SignupPage" , {err : "Email Already Registered !"})
+
     }
     const newUser =  await data.save()
     res.redirect("/login")
   } catch (error) {
     console.log(error)
-    res.send({error})
+    return res.render("SignupPage" , {err : "Unexpected Error , Please try again latter!"})
   }
 
 })

@@ -318,6 +318,10 @@
             <input type="password" name="password" required="">
             <label>Password</label>
           </div>
+
+          <% if(err) {%>
+            <div class="" style="color:red; font-size: 1rem; text-align: center;"><%= err %></div>
+            <%}%>
           <button  id="a1">
             <span></span>
             <span></span>
